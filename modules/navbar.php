@@ -23,11 +23,3 @@
   </nav>
 
   <?php
-
-  require_once "connector.php";
-
-  try {
-    $pdo = connectToDb();
-  } catch (PDOException $e) {
-    die("Fel: " . $e->getMessage());
-  }

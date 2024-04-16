@@ -13,7 +13,7 @@
 function connectToDb(): PDO
 {
   $host = "127.0.0.1";
-  $db = "bilar";
+  $db = "skivor_ab";
   $user = "root";
   $pass = "hemligt";
   $charset = "utf8mb4";
