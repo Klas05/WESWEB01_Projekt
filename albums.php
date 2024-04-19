@@ -4,7 +4,7 @@
 
 <div class="albums_container">
   <div class="dropdown_wrapper">
-    <form id="dropdown_form" action="/albums.php">
+    <form id="dropdown_form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
       <select name="artists" id="dropdown">
         <?php
         $sql = "SELECT * FROM artist_names";
@@ -21,7 +21,9 @@
     </form>
   </div>
   <div class="form_wrapper">
-
+    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
+      <input type="text" name="name">
+    </form>
   </div>
   <div class="table_wrapper"></div>
 </div>

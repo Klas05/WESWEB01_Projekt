@@ -65,7 +65,7 @@ h2 {
 
 .albums_container {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: auto 1fr;
   grid-template-rows: auto 1fr;
 }
 
@@ -76,4 +76,8 @@ h2 {
 .dropdown_wrapper {
   padding: 2rem;
   justify-self: center;
+}
+
+select {
+  width: 10rem;
 }
