@@ -1,3 +1,8 @@
-<?php
+<?php include("modules/navbar.php"); ?>
 
-include("modules/navbar.php");
+
+
+
+
+
+<?php include("modules/footer.php"); ?>
