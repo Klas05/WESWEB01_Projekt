@@ -53,7 +53,6 @@ footer {
 
 td,
 th {
-  /* padding-top: 1rem; */
   padding: 0.5rem;
   padding-right: 6rem;
   padding-left: 6rem;
@@ -80,4 +79,25 @@ h2 {
 
 select {
   width: 10rem;
+}
+
+td.albums {
+  padding: 2rem;
+  justify-self: center;
+}
+
+tr.albums {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(100px, 1fr));
+}
+
+.buttons {
+  display: grid;
+  justify-content: space-between;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 3rem;
+}
+
+table.albums {
+  width: 100dvw;
 }
