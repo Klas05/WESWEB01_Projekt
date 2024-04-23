@@ -1,6 +1,6 @@
 <?php
 
-require_once "modules/connector.php";
+require_once __DIR__ . "/../modules/connector.php";
 
 function getData($sql): array
 {

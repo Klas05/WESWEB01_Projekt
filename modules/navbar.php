@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Skivor AB</title>
-  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -13,7 +13,7 @@
   <nav>
     <?php
 
-    require_once "./functions/functions.php";
+    require_once __DIR__ . "/../functions/functions.php";
 
     $pages = array(
       "Skivor AB" => "index.php",
