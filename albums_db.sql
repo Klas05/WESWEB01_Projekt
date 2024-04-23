@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               10.4.32-MariaDB - mariadb.org binary distribution
+-- Server version:               10.4.28-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win64
 -- HeidiSQL Version:             12.6.0.6765
 -- --------------------------------------------------------
@@ -31,13 +31,27 @@ CREATE TABLE IF NOT EXISTS `albums` (
   `img` varchar(100) DEFAULT NULL,
   `import_date` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table skivor_ab.albums: ~2 rows (approximately)
+-- Dumping data for table skivor_ab.albums: ~4 rows (approximately)
 DELETE FROM `albums`;
 INSERT INTO `albums` (`id`, `artist_id`, `name`, `rating`, `release_date`, `img`, `import_date`) VALUES
 	(1, 1, 'Iron Maiden', 5, '1980-04-14', 'https://upload.wikimedia.org/wikipedia/en/7/7c/Iron_Maiden_%28album%29_cover.jpg', '2024-04-16 20:05:41'),
-	(2, 2, 'Nevermind', 5, '1991-09-24', 'https://i.discogs.com/XoAXkLe03Vk0Kt-oQqw7V9uW5nBzQdNvZd0zar5mOiQ/rs:fit/g:sm/q:90/h:592/w:600/czM6L', '2024-04-16 20:21:00');
+	(2, 2, 'Nevermind', 5, '1991-09-24', 'https://upload.wikimedia.org/wikipedia/en/b/b7/NirvanaNevermindalbumcover.jpg', '2024-04-16 20:21:00'),
+	(3, 1, 'Peace of Mind', 8, '1983-05-16', NULL, '2024-04-23 14:00:06'),
+	(4, 2, 'In Utero', 10, '1993-09-21', NULL, '2024-04-23 14:02:00');
+
+-- Dumping structure for view skivor_ab.albums_display
+DROP VIEW IF EXISTS `albums_display`;
+-- Creating temporary table to overcome VIEW dependency errors
+CREATE TABLE `albums_display` (
+	`name` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`artist` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`rating` TINYINT(5) NOT NULL,
+	`release_date` DATE NOT NULL,
+	`id` INT(11) NOT NULL,
+	`artist_id` INT(11) NOT NULL
+) ENGINE=MyISAM;
 
 -- Dumping structure for table skivor_ab.artists
 DROP TABLE IF EXISTS `artists`;
@@ -53,6 +67,14 @@ DELETE FROM `artists`;
 INSERT INTO `artists` (`id`, `name`, `genre`) VALUES
 	(1, 'Iron Maiden', 'Rock'),
 	(2, 'Nirvana', 'Grunge');
+
+-- Dumping structure for view skivor_ab.artist_names
+DROP VIEW IF EXISTS `artist_names`;
+-- Creating temporary table to overcome VIEW dependency errors
+CREATE TABLE `artist_names` (
+	`id` INT(11) NOT NULL,
+	`name` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci'
+) ENGINE=MyISAM;
 
 -- Dumping structure for table skivor_ab.songs
 DROP TABLE IF EXISTS `songs`;
@@ -94,19 +116,48 @@ INSERT INTO `songs` (`id`, `album_id`, `artist_id`, `name`, `duration`, `release
 DROP VIEW IF EXISTS `start`;
 -- Creating temporary table to overcome VIEW dependency errors
 CREATE TABLE `start` (
+	`id` INT(11) NOT NULL,
 	`img` VARCHAR(100) NULL COLLATE 'utf8mb4_general_ci',
 	`name` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
 	`artist` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
-	`release_date` DATE NOT NULL
+	`YEAR` INT(4) NULL,
+	`MONTH` INT(2) NULL,
+	`DAY` INT(2) NULL
 ) ENGINE=MyISAM;
+
+-- Dumping structure for view skivor_ab.start_songs
+DROP VIEW IF EXISTS `start_songs`;
+-- Creating temporary table to overcome VIEW dependency errors
+CREATE TABLE `start_songs` (
+	`name` VARCHAR(50) NOT NULL COLLATE 'utf8mb4_general_ci',
+	`duration` TIME NOT NULL
+) ENGINE=MyISAM;
+
+-- Removing temporary table and create final VIEW structure
+DROP TABLE IF EXISTS `albums_display`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `albums_display` AS SELECT 
+		albums.name, artists.name AS artist, albums.rating, albums.release_date, albums.id AS id, artists.id AS artist_id
+	FROM 
+		albums
+	INNER JOIN 
+		artists
+	ON 
+		albums.artist_id = artists.id ;
+
+-- Removing temporary table and create final VIEW structure
+DROP TABLE IF EXISTS `artist_names`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `artist_names` AS SELECT id, name FROM artists ORDER BY NAME ;
 
 -- Removing temporary table and create final VIEW structure
 DROP TABLE IF EXISTS `start`;
 CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `start` AS SELECT
+		albums.id,
 		albums.img,
 		albums.name,
 		artists.name AS artist,
-		albums.release_date
+		YEAR(albums.release_date) AS YEAR,
+		MONTH(albums.release_date) AS MONTH,
+		DAY(albums.release_date) AS DAY
 	FROM
 		artists
 	INNER JOIN
@@ -122,6 +173,18 @@ CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `start` AS SELECT
 			LIMIT 
 				1
 			) AS id) ;
+
+-- Removing temporary table and create final VIEW structure
+DROP TABLE IF EXISTS `start_songs`;
+CREATE ALGORITHM=UNDEFINED SQL SECURITY DEFINER VIEW `start_songs` AS SELECT 
+		songs.name, 
+		songs.duration
+	FROM
+		songs
+	INNER JOIN
+		start
+	on
+		songs.album_id IN (SELECT id FROM start) ;
 
 /*!40103 SET TIME_ZONE=IFNULL(@OLD_TIME_ZONE, 'system') */;
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
