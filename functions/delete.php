@@ -1,5 +1,3 @@
-<?php include(__DIR__ . "/../modules/navbar.php"); ?>
-
 <?php
 
 if ($_GET) {

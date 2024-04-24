@@ -59,7 +59,7 @@
             }
             echo "<td class='buttons albums'>";
             echo "<a href='functions/mod.php?item=albums&id=" . $val . "'>Modifiera</a>";
-            echo "<a href='functions/remove.php?item=albums&id=" . $val . "'>Ta bort</a>";
+            echo "<a href='remove.php?item=albums&id=" . $val . "'>Ta bort</a>";
             echo "</td>";
             break;
           }
@@ -79,7 +79,7 @@
             }
             echo "<td class='buttons albums'>";
             echo "<a href='functions/mod.php?item=albums&id=" . $val . "'>Modifiera</a>";
-            echo "<a href='functions/remove.php?item=albums&id=" . $val . "'>Ta bort</a>";
+            echo "<a href='remove.php?item=albums&id=" . $val . "'>Ta bort</a>";
             echo "</td>";
             break;
           }
