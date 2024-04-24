@@ -20,9 +20,13 @@
     <form action="<?php echo "functions/addAlbum.php" ?>" method="post">
       <fieldset>
         <legend>Lägg till en ny skiva:</legend>
-        <input type="text" name="album" required>
-        <input type="number" name="rating" max="10" min="1" step="0.1" value="5" required>
-        <input type="date" name="release" value="<?php echo date("Y-m-d"); ?>" required>
+        <label for="album">Namn:</label>
+        <input type="text" name="album" id="album" required>
+        <label for="rating">Betyg:</label>
+        <input type="number" name="rating" id="rating" max="10" min="1" step="0.1" value="5" required>
+        <label for="release">Utgivningsdatum:</label>
+        <input type="date" name="release" id="release" value="<?php echo date("Y-m-d"); ?>" required>
+        <label for="newDropdown">Artist:</label>
         <select name="artist" id="newDropdown" required>
           <option value="default">Välj artist</option>
           <?php
@@ -58,8 +62,8 @@
               continue;
             }
             echo "<td class='buttons albums'>";
-            echo "<a href='functions/mod.php?item=albums&id=" . $val . "'>Modifiera</a>";
-            echo "<a href='remove.php?item=albums&id=" . $val . "'>Ta bort</a>";
+            echo "<a href='change.php?action=modify&item=albums&id=" . $val . "'>Modifiera</a>";
+            echo "<a href='change.php?action=delete&item=albums&id=" . $val . "'>Ta bort</a>";
             echo "</td>";
             break;
           }
@@ -78,8 +82,8 @@
               continue;
             }
             echo "<td class='buttons albums'>";
-            echo "<a href='functions/mod.php?item=albums&id=" . $val . "'>Modifiera</a>";
-            echo "<a href='remove.php?item=albums&id=" . $val . "'>Ta bort</a>";
+            echo "<a href='change.php?action=modify&item=albums&id=" . $val . "'>Modifiera</a>";
+            echo "<a href='change.php?action=delete&item=albums&id=" . $val . "'>Ta bort</a>";
             echo "</td>";
             break;
           }

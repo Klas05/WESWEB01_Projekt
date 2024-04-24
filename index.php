@@ -22,7 +22,13 @@ $album = getData($sql)[0];
         <th>Låt namn</th>
         <th>Längd</th>
       </tr>
-      <?php getLatestAlbumSongs(); ?>
+      <?php
+      $songs = getSongs($album["id"]);
+
+      foreach ($songs as $song) {
+        echo "<tr><td>" . $song["name"] . "</td>" . "<td>" . $song["duration"] . "</td>";
+      }
+      ?>
     </table>
   </div>
 </div>

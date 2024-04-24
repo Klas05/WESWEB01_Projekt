@@ -42,11 +42,9 @@ function getMonthName($monthNumber): string
   }
 }
 
-function getLatestAlbumSongs(): void
+function getSongs($id, $item = "albums"): array
 {
-  $sql = "SELECT * FROM start_songs";
-  $songs = getData($sql);
-  foreach ($songs as $song) {
-    echo "<tr><td>" . $song["name"] . "</td>" . "<td>" . $song["duration"] . "</td>";
-  }
+  $foreignKey = substr_replace($item, "", -1) . "_id";
+  $sql = "SELECT id, name, duration, release_year FROM songs WHERE " . $foreignKey .  " = " . $id;
+  return getData($sql);
 }

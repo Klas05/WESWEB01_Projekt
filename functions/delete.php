@@ -1,14 +1,11 @@
 <?php
 
-if ($_GET) {
-  require_once __DIR__ . "/../modules/connector.php";
+require_once __DIR__ . "/../modules/connector.php";
 
-  $pdo = connectToDb();
+$sql = "SELECT name from " . $_GET["item"] . " WHERE id = " . $_GET["id"];
 
-  $sql = "SELECT name from " . $_GET["item"] . " WHERE id = " . $_GET["id"];
+$res = getData($sql)[0];
 
-  $res = getData($sql)[0];
-}
 
 ?>
 
@@ -22,17 +19,19 @@ if ($_GET) {
 
 <?php
 if ($_POST) {
+  $location = "location:" . $_GET["item"] . ".php";
+  if ($_GET["item"] == "songs") {
+    $location = "location:change.php?action=modify&item=albums&id=" . $_GET["album"];
+  }
   if ($_POST["answer"] == "Ja") {
+    $pdo = connectToDb();
     $sql = "DELETE FROM " . $_GET["item"] . " WHERE id = " . $_GET["id"];
     $stmt = $pdo->prepare($sql);
     $stmt->execute();
-    header("location:" . $_GET["item"] . ".php");
+    header($location);
   } else {
-    header("location:" . $_GET["item"] . ".php");
+    header($location);
   }
 }
 
 ?>
-
-
-<?php include(__DIR__ . "/../modules/footer.php"); ?>
