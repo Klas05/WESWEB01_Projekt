@@ -1,23 +1,21 @@
 <?php include("modules/navbar.php"); ?>
 <div class="albums_container">
-  <div class="dropdown_wrapper">
-    <form id="dropdown_form" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
-      <select name="artists" id="dropdown">
-        <?php
-        $sql = "SELECT * FROM artist_names";
-        $artists = getData($sql);
-        ?>
-        <option value="default">Välj artist</option>
-        <?php
-        foreach ($artists as $artist) {
-          echo "<option value=" . $artist["id"] . ">" . $artist["name"] . "</option>";
-        }
-        ?>
-      </select>
-    </form>
-  </div>
+  <form id="dropdown_form" action="">
+    <select name="artists" id="dropdown">
+      <?php
+      $sql = "SELECT * FROM artist_names";
+      $artists = getData($sql);
+      ?>
+      <option value="default">Välj artist</option>
+      <?php
+      foreach ($artists as $artist) {
+        echo "<option value=" . $artist["id"] . ">" . $artist["name"] . "</option>";
+      }
+      ?>
+    </select>
+  </form>
   <div class="form_wrapper">
-    <form action="<?php echo "functions/addAlbum.php" ?>" method="post">
+    <form action="functions/addElement.php" method="post">
       <fieldset>
         <legend>Lägg till en ny skiva:</legend>
         <label for="album">Namn:</label>
@@ -35,61 +33,43 @@
           }
           ?>
         </select>
-        <input type="submit" value="Lägg till">
+        <button type="submit" name="add" value="albums">Lägg till</button>
       </fieldset>
     </form>
   </div>
   <div class="table_wrapper">
-    <table class="albums">
-      <tr class="albums">
-        <th class="albums">Album</th>
-        <th class="albums">Artist</th>
-        <th class="albums">Betyg</th>
-        <th class="albums">Utgivnings datum</th>
-        <th class="albums">Modifiera/radera skiva</th>
+    <table>
+      <tr>
+        <th>Album</th>
+        <th>Artist</th>
+        <th>Betyg</th>
+        <th>Utgivnings datum</th>
+        <th>Modifiera/radera skiva</th>
       </tr>
       <?php
+      $sql = "SELECT * FROM albums_display ORDER BY artist_id, release_date;";
       if ($_GET) {
-        $sql = "SELECT * FROM albums_display WHERE artist_id = " . $_GET["artists"];
-
-        $res = getData($sql);
-
-        foreach ($res as $album) {
-          echo "<tr class='albums'>";
-          foreach ($album as $key => $val) {
-            if ($key !== "id") {
-              echo "<td class='albums'>" . $val . "</td>";
-              continue;
-            }
-            echo "<td class='buttons albums'>";
-            echo "<a href='change.php?action=modify&item=albums&id=" . $val . "'>Modifiera</a>";
-            echo "<a href='change.php?action=delete&item=albums&id=" . $val . "'>Ta bort</a>";
-            echo "</td>";
-            break;
-          }
-          echo "</tr>";
-        }
-      } else {
-        $sql = "SELECT * FROM albums_display;";
-
-        $res = getData($sql);
-
-        foreach ($res as $album) {
-          echo "<tr class='albums'>";
-          foreach ($album as $key => $val) {
-            if ($key !== "id") {
-              echo "<td class='albums'>" . $val . "</td>";
-              continue;
-            }
-            echo "<td class='buttons albums'>";
-            echo "<a href='change.php?action=modify&item=albums&id=" . $val . "'>Modifiera</a>";
-            echo "<a href='change.php?action=delete&item=albums&id=" . $val . "'>Ta bort</a>";
-            echo "</td>";
-            break;
-          }
-          echo "</tr>";
-        }
+        $sql = "SELECT * FROM albums_display WHERE artist_id = " . $_GET["artists"] . " ORDER BY artist_id, release_date;";
       }
+
+      $albums = getData($sql);
+
+      foreach ($albums as $album) {
+        echo "<tr>";
+        foreach ($album as $key => $val) {
+          if ($key !== "id") {
+            echo "<td>" . $val . "</td>";
+            continue;
+          }
+          echo "<td class='buttons'>";
+          echo "<a href='change.php?action=modify&item=albums&id=" . $val . "'>Modifiera</a>";
+          echo "<a href='change.php?action=delete&item=albums&id=" . $val . "'>Ta bort</a>";
+          echo "</td>";
+          break;
+        }
+        echo "</tr>";
+      }
+
 
       ?>
     </table>

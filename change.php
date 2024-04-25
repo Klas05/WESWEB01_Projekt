@@ -9,7 +9,8 @@ require_once "functions/functions.php";
 if ($_GET) {
   if ($_GET["action"] == "delete") {
     include("functions/delete.php");
-  } else {
+  }
+  if ($_GET["action"] == "modify") {
     include("functions/modify.php");
   }
 }

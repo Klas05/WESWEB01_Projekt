@@ -25,6 +25,13 @@ if ($_POST) {
   }
   if ($_POST["answer"] == "Ja") {
     $pdo = connectToDb();
+    if ($_GET["item"] == "artists") {
+      $sqls = array("DELETE FROM songs WHERE artist_id = " . $_GET["id"] . ";", "DELETE FROM albums WHERE artist_id = " . $_GET["id"] . ";");
+      foreach ($sqls as $sql) {
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute();
+      }
+    }
     $sql = "DELETE FROM " . $_GET["item"] . " WHERE id = " . $_GET["id"];
     $stmt = $pdo->prepare($sql);
     $stmt->execute();

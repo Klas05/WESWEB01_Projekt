@@ -10,7 +10,6 @@ function getData($sql): array
     die("Fel: " . $e->getMessage());
   }
   $res = $pdo->query($sql)->fetchAll();
-  // $res = $stmt->fetchAll();
   return $res;
 }
 
