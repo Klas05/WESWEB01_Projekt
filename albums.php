@@ -1,4 +1,8 @@
-<?php include("modules/navbar.php"); ?>
+<?php include("modules/navbar.php");
+if ($_POST) {
+  addRow($_POST);
+}
+?>
 <div class="albums_container">
   <form id="dropdown_form" action="">
     <select name="artists" id="dropdown">
@@ -15,7 +19,7 @@
     </select>
   </form>
   <div class="form_wrapper">
-    <form action="functions/addElement.php" method="post">
+    <form action="" method="post">
       <fieldset>
         <legend>Lägg till en ny skiva:</legend>
         <label for="album">Namn:</label>

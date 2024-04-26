@@ -1,4 +1,8 @@
-<?php include("modules/navbar.php"); ?>
+<?php include("modules/navbar.php");
+if ($_POST) {
+  addRow($_POST);
+}
+?>
 
 
 <div class="artists_container">
@@ -16,7 +20,7 @@
     </select>
   </form>
   <div class="form_wrapper">
-    <form action="functions/addElement.php" method="post">
+    <form action="" method="post">
       <fieldset>
         <legend>Lägg till ny artist:</legend>
         <label for="name">Namn:</label>

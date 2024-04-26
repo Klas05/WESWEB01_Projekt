@@ -3,22 +3,22 @@
     <form action="" method="post">
       <fieldset class="editing">
         <legend>
-          Redigera albumet <?php echo $res["name"]; ?>
+          Redigera albumet <?php echo $result["name"]; ?>
         </legend>
         <div class="values">
           <label for="name">Namn:</label>
-          <input type="text" name="name" id="name" value="<?php echo $res["name"]; ?>" required>
+          <input type="text" name="name" id="name" value="<?php echo $result["name"]; ?>" required>
           <label for="rating">Betyg:</label>
-          <input type="number" name="rating" id="rating" max="10" min="1" step="0.1" value="<?php echo $res["rating"]; ?>" required>
+          <input type="number" name="rating" id="rating" max="10" min="1" step="0.1" value="<?php echo $result["rating"]; ?>" required>
           <label for="release_date">Utgivningsdatum:</label>
-          <input type="date" name="release_date" id="release_date" value="<?php echo $res["release_date"]; ?>" required>
+          <input type="date" name="release_date" id="release_date" value="<?php echo $result["release_date"]; ?>" required>
           <label for="img">Bildlänk:</label>
-          <input type="url" name="img" id="img" value="<?php echo $res["img"]; ?>">
+          <input type="url" name="img" id="img" value="<?php echo $result["img"]; ?>">
           <label for="artist_id">Artist:</label>
           <select name="artist_id" id="artist_id" required>
             <?php
             foreach ($artists as $artist) {
-              if ($artist["id"] == $res["artist_id"]) {
+              if ($artist["id"] == $result["artist_id"]) {
                 echo "<option selected value=" . $artist["id"] . ">" . $artist["name"] . "</option>";
               } else {
                 echo "<option value=" . $artist["id"] . ">" . $artist["name"] . "</option>";
@@ -61,16 +61,15 @@
         <th>Ta bort</th>
       </tr>
       <?php
-      $songs = getSongs($res["id"]);
+      $songs = getSongs($result["id"]);
 
-      // print_r($songs);
       if (count($songs) > 0) {
         foreach ($songs as $song) {
           echo "<tr>";
           echo "<td>" . $song["name"] . "</td>";
           echo "<td>" . $song["duration"] . "</td>";
           echo "<td>" . $song["release_year"] . "</td>";
-          echo "<td><a href='change.php?action=delete&item=songs&id=" . $song["id"] . "&album=" . $res["id"] . "'>Ta bort</a></td>";
+          echo "<td><a href='change.php?action=delete&item=songs&id=" . $song["id"] . "&album=" . $result["id"] . "'>Ta bort</a></td>";
           echo "</tr>";
         }
       } else {
