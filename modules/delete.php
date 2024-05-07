@@ -6,12 +6,10 @@ $name = getData($sql)[0]["name"];
 
 if ($_POST) {
   $goTo = "location:" . $_GET["item"] . ".php";
-  if ($get["item"] == "songs") {
-    $goTo = "location:change.php?action=modify&item=albums&id=" . $get["album"];
+  if ($_GET["item"] == "songs") {
+    $goTo = "location:change.php?action=modify&item=albums&id=" . $_GET["album"];
   }
-  if ($_POST["answer"] == "Ja") {
-    deleteRow($_POST, $_GET);
-  }
+  deleteRow($_POST, $_GET);
   header($goTo);
 }
 

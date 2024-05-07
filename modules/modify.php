@@ -7,10 +7,10 @@ $result = getData($sql)[0];
 if ($_GET["item"] == "albums") {
   $sql = "SELECT * FROM artist_names";
   $artists = getData($sql);
-  include("modules/modifyAlbum.php");
+  include_once("modules/modifyAlbum.php");
 }
 if ($_GET["item"] == "artists") {
-  include("modules/modifyArtist.php");
+  include_once("modules/modifyArtist.php");
 }
 
 
@@ -25,17 +25,10 @@ if ($_POST) {
   $pdo = connectToDb();
 
   if ($_POST["answer"] === "Lägg till") {
-    $name = $_POST["name"];
-    $duration = "00:" . $_POST["duration"];
-    $release_year = $_POST["release_year"];
-    $album_id = $result["id"];
-    $artist_id = $result["artist_id"];
-
-    $sql = "INSERT INTO songs (name, duration, release_year, album_id, artist_id) VALUES (?, ?, ?, ?, ?)";
-    $stmt = $pdo->prepare($sql);
-    $stmt->execute([$name, $duration, $release_year, $album_id, $artist_id]);
+    addRow($_POST);
 
     header('Location: ' . $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING']);
+    print_r($_POST);
   }
 
   $updateFields = [];

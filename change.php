@@ -1,20 +1,20 @@
 
 <?php
 
-include("modules/navbar.php");
+include_once("modules/navbar.php");
 
 require_once "functions/functions.php";
 
 
 if ($_GET) {
   if ($_GET["action"] == "delete") {
-    include("modules/delete.php");
+    include_once("modules/delete.php");
   }
   if ($_GET["action"] == "modify") {
-    include("modules/modify.php");
+    include_once("modules/modify.php");
   }
 }
 
 
-include("modules/footer.php");
+include_once("modules/footer.php");
 ?>

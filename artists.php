@@ -1,4 +1,4 @@
-<?php include("modules/navbar.php");
+<?php include_once("modules/navbar.php");
 if ($_POST) {
   addRow($_POST);
 }
@@ -72,4 +72,4 @@ if ($_POST) {
   });
 </script>
 
-<?php include("modules/footer.php"); ?>
+<?php include_once("modules/footer.php"); ?>

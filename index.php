@@ -1,6 +1,6 @@
 <?php
 
-include("modules/navbar.php");
+include_once("modules/navbar.php");
 
 require_once "functions/functions.php";
 
@@ -33,4 +33,4 @@ $album = getData($sql)[0];
   </div>
 </div>
 
-<?php include("modules/footer.php"); ?>
+<?php include_once("modules/footer.php"); ?>

@@ -34,7 +34,6 @@
       </fieldset>
     </form>
   </div>
-
   <div class="songs_wrapper info">
     <form action="" method="post">
       <fieldset class="editing">
@@ -46,9 +45,11 @@
           <input type="time" name="duration" id="duration" min="00:01" required>
           <label for="release_year">Utgivningsår:</label>
           <input type="number" min="1901" max="<?php echo date("Y"); ?>" step="1" value="<?php echo date("Y"); ?>" maxlength="4" name="release_year" required>
+          <input type="hidden" name="album_id" value="<?php echo $result["id"] ?>">
+          <input type="hidden" name="artist_id" value="<?php echo $result["artist_id"] ?>">
         </div>
         <div class="answers">
-          <input type="submit" name="answer" value="Lägg till">
+          <button type="submit" name="answer" value="Lägg till">Lägg till</button>
         </div>
       </fieldset>
     </form>
@@ -61,13 +62,16 @@
         <th>Ta bort</th>
       </tr>
       <?php
+      // Hämtar låtar till albumet som redigeras och skrivet ut de i en tabell.
+      // Ifall albumet är tomt beskrivs det istället.
+
       $songs = getSongs($result["id"]);
 
       if (count($songs) > 0) {
         foreach ($songs as $song) {
           echo "<tr>";
           echo "<td>" . $song["name"] . "</td>";
-          echo "<td>" . $song["duration"] . "</td>";
+          echo "<td>" . substr($song["duration"], 3) . "</td>";
           echo "<td>" . $song["release_year"] . "</td>";
           echo "<td><a href='change.php?action=delete&item=songs&id=" . $song["id"] . "&album=" . $result["id"] . "'>Ta bort</a></td>";
           echo "</tr>";
