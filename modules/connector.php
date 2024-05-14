@@ -2,11 +2,14 @@
 
 /**
  * PDO-connector
- *
- * @param [string] $host
- * @param [string] $db
- * @param [string] $user
- * @param [string] $pass
+ * 
+ * Ansluter till databasen och returnerar ett PDO.
+ * Låter oss interagera med databasen.
+ * 
+ * @param string $host
+ * @param string $db
+ * @param string $user
+ * @param string $pass
  * @param string $charset
  * @return pdo
  */

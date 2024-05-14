@@ -1,6 +1,7 @@
 <?php include_once("modules/navbar.php");
 if ($_POST) {
-  addRow($_POST);
+  $safePost = sanitize($_POST);
+  addRow($_safePost);
 }
 ?>
 <div class="albums_container">
@@ -53,10 +54,12 @@ if ($_POST) {
       <?php
       $sql = "SELECT * FROM albums_display ORDER BY artist_id, release_date;";
       if ($_GET) {
-        $sql = "SELECT * FROM albums_display WHERE artist_id = " . $_GET["artists"] . " ORDER BY artist_id, release_date;";
+        $sql = "SELECT * FROM albums_display WHERE artist_id = :artist_id ORDER BY artist_id, release_date;";
       }
 
-      $albums = getData($sql);
+      $safeGet = sanitize($_GET);
+
+      $albums = getData($sql, [$safeGet["artists"]]);
 
       foreach ($albums as $album) {
         echo "<tr>";

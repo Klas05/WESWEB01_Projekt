@@ -21,16 +21,19 @@ function sanitize(array $getOrPost): array
  * @param string $sql
  * @return array
  */
-function getData(string $sql): array
+function getData(string $sql, array $args = NULL): array
 {
   try {
     $pdo = connectToDb();
   } catch (PDOException $e) {
     die("Fel: " . $e->getMessage());
   }
-  $res = $pdo->query($sql)->fetchAll();
+  $stmt = $pdo->prepare($sql);
+  $stmt->execute($args);
+  $res = $stmt->fetchAll();
   return $res;
 }
+
 /**
  * Raderar en rad i databasen
  * 
@@ -72,7 +75,6 @@ function deleteRow(array $post, array $get): void
  * @param array $post
  * @return void
  */
-
 function addRow(array $post): void
 {
   try {
@@ -92,8 +94,6 @@ function addRow(array $post): void
     $item = $safePost["add"];
     unset($safePost["add"]);
   }
-
-
 
   if ($item == "albums") {
     $sql = "INSERT INTO albums (artist_id, name, rating, release_date) VALUES (:artist, :album, :rating, :release);";

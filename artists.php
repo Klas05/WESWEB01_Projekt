@@ -1,6 +1,7 @@
 <?php include_once("modules/navbar.php");
 if ($_POST) {
-  addRow($_POST);
+  $safePost = sanitize($_POST);
+  addRow($_safePost);
 }
 ?>
 

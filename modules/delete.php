@@ -1,15 +1,18 @@
 <?php
 
-$sql = "SELECT name from " . $_GET["item"] . " WHERE id = " . $_GET["id"];
+$safeGet = sanitize($_GET);
+
+$sql = "SELECT name from " . $safeGet["item"] . " WHERE id = " . $safeGet["id"];
 
 $name = getData($sql)[0]["name"];
 
 if ($_POST) {
-  $goTo = "location:" . $_GET["item"] . ".php";
-  if ($_GET["item"] == "songs") {
-    $goTo = "location:change.php?action=modify&item=albums&id=" . $_GET["album"];
+  $safePost = sanitize($_POST);
+  $goTo = "location:" . $safeGet["item"] . ".php";
+  if ($safeGet["item"] == "songs") {
+    $goTo = "location:change.php?action=modify&item=albums&id=" . $safeGet["album"];
   }
-  deleteRow($_POST, $_GET);
+  deleteRow($safePost, $safeGet);
   header($goTo);
 }
 

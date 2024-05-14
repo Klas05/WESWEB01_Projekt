@@ -1,55 +1,56 @@
 <?php
-ob_start();
+if ($_GET) {
+  ob_start();
 
-$sql = "SELECT * from " . $_GET["item"] . " WHERE id = " . $_GET["id"];
-$result = getData($sql)[0];
+  $safeGet = sanitize($_GET);
+  $sql = "SELECT * from " . $safeGet["item"] . " WHERE id = " . $safeGet["id"];
+  $result = getData($sql)[0];
 
-if ($_GET["item"] == "albums") {
-  $sql = "SELECT * FROM artist_names";
-  $artists = getData($sql);
-  include_once("modules/modifyAlbum.php");
-}
-if ($_GET["item"] == "artists") {
-  include_once("modules/modifyArtist.php");
-}
-
-
-?>
-<?php
-
-if ($_POST) {
-  if ($_POST["answer"] == "Avbryt") {
-    header("location:" . $_GET["item"] . ".php");
+  if ($safeGet["item"] == "albums") {
+    $sql = "SELECT * FROM artist_names";
+    $artists = getData($sql);
+    include_once("modules/modifyAlbum.php");
+  }
+  if ($safeGet["item"] == "artists") {
+    include_once("modules/modifyArtist.php");
   }
 
-  $pdo = connectToDb();
 
-  if ($_POST["answer"] === "Lägg till") {
-    addRow($_POST);
+  if ($_POST) {
+    $safePost = sanitize($_POST);
 
-    header('Location: ' . $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING']);
-    print_r($_POST);
-  }
-
-  $updateFields = [];
-  $updateValues = [];
-
-  foreach ($_POST as $key => $value) {
-    if ($key !== "answer") {
-      $updateFields[] = $key . " = ?";
-      $updateValues[] = $value;
+    if ($safePost["answer"] == "Avbryt") {
+      header("location:" . $safeGet["item"] . ".php");
     }
+
+    $pdo = connectToDb();
+
+    if ($safePost["answer"] === "Lägg till") {
+      addRow($_safePost);
+
+      header('Location: ' . $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING']);
+    }
+
+    $updateFields = [];
+    $updateValues = [];
+
+    foreach ($safePost as $key => $value) {
+      if ($key !== "answer") {
+        $updateFields[] = $key . " = ?";
+        $updateValues[] = $value;
+      }
+    }
+
+    $updateFieldsString = implode(", ", $updateFields);
+
+    $sql = "UPDATE " . $safeGet['item'] . " SET " . $updateFieldsString . " WHERE id = ?";
+    $updateValues[] = $result["id"];
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($updateValues);
+
+    header("location:" . $safeGet["item"] . ".php");
   }
 
-  $updateFieldsString = implode(", ", $updateFields);
-
-  $sql = "UPDATE " . $_GET['item'] . " SET " . $updateFieldsString . " WHERE id = ?";
-  $updateValues[] = $result["id"];
-
-  $stmt = $pdo->prepare($sql);
-  $stmt->execute($updateValues);
-
-  header("location:" . $_GET["item"] . ".php");
+  ob_flush();
 }
-
-ob_flush();
