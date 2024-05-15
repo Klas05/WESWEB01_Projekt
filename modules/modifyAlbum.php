@@ -62,8 +62,9 @@
         <th>Ta bort</th>
       </tr>
       <?php
-      // Hämtar låtar till albumet som redigeras och skrivet ut de i en tabell.
-      // Ifall albumet är tomt beskrivs det istället.
+      /**
+       * Hämtar låtar till albumet som redigeras och skrivet ut de i en tabell. Ifall albumet är tomt beskrivs det istället.
+       */
 
       $songs = getSongs($result["id"]);
 

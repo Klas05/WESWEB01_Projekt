@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Konfirmations sida för att radera rad i databasen. Vid "ja" så förbereds rätt sql query till den valda raden och exekverar den därefter. Till sist så skickas användaren tillbaka till den sidan de kom från.
+ */
+
 $safeGet = sanitize($_GET);
 
 $sql = "SELECT name from " . $safeGet["item"] . " WHERE id = " . $safeGet["id"];

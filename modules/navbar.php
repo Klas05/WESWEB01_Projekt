@@ -17,7 +17,7 @@
     <?php
 
     /**
-     * Fixar så att aktuell 
+     * Fixar så att aktuell sida markeras i navbaren med färg.
      */
 
     require_once __DIR__ . "/../functions/functions.php";

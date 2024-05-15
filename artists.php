@@ -1,4 +1,8 @@
 <?php include_once("modules/navbar.php");
+/**
+ * Vid rad tillägg i databasen så skickas användaren till denna sida med en POST förfrågan.
+ * Vid detta fall så saniteras indatan och raden läggs till i databasen.
+ */
 if ($_POST) {
   $safePost = sanitize($_POST);
   addRow($_safePost);
@@ -41,6 +45,9 @@ if ($_POST) {
         <th>Modifiera/Ta bort artist</th>
       </tr>
       <?php
+      /**
+       * Radar upp alla artister som finns i databasen samt alternativen att radera eller modifiera artisten men också att visa upp alla album som artisten har i databasen.
+       */
       $sql = "SELECT * FROM artists ORDER BY name;";
       if ($_GET) {
         $sql = "SELECT * FROM artists WHERE genre = '" . $_GET["genre"] . "' ORDER BY name;";
@@ -68,6 +75,9 @@ if ($_POST) {
 </div>
 
 <script>
+  /**
+   * Laddar om sidan vid val av genre för sortering.
+   */
   document.getElementById("dropdown").addEventListener("change", function() {
     document.getElementById("dropdown_form").submit();
   });

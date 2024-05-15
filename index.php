@@ -4,6 +4,10 @@ include_once("modules/navbar.php");
 
 require_once "functions/functions.php";
 
+/**
+ * Hämtar senaste albumet från vy:n "start" och visar upp det på start sidan.
+ */
+
 $sql = "SELECT * FROM start";
 
 $album = getData($sql)[0];

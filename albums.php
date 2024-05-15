@@ -52,14 +52,19 @@ if ($_POST) {
         <th>Modifiera/radera skiva</th>
       </tr>
       <?php
+      /**
+       * Hämtar alla album och visar upp de samt alternativen att redigera och modifiera albumet i databasen.
+       */
       $sql = "SELECT * FROM albums_display ORDER BY artist_id, release_date;";
+      $albums = getData($sql);
+
       if ($_GET) {
+        $safeGet = sanitize($_GET);
         $sql = "SELECT * FROM albums_display WHERE artist_id = :artist_id ORDER BY artist_id, release_date;";
+        $albums = getData($sql, [$safeGet["artists"]]);
       }
 
-      $safeGet = sanitize($_GET);
 
-      $albums = getData($sql, [$safeGet["artists"]]);
 
       foreach ($albums as $album) {
         echo "<tr>";
@@ -84,6 +89,9 @@ if ($_POST) {
 </div>
 
 <script>
+  /**
+   * Laddar om sidan vid förändring i dropdown elementet som väljer artist och sorterar därefter albumen efter artisten som är vald.
+   */
   document.getElementById("dropdown").addEventListener("change", function() {
     document.getElementById("dropdown_form").submit();
   });

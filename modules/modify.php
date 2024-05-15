@@ -2,6 +2,9 @@
 if ($_GET) {
   ob_start();
 
+  /**
+   * Saniterar indata och hämtar rätt rad i databasen samt visar upp rätt format genom att inkludera filen med formatet för antingen album eller artister.
+   */
   $safeGet = sanitize($_GET);
   $sql = "SELECT * from " . $safeGet["item"] . " WHERE id = " . $safeGet["id"];
   $result = getData($sql)[0];
@@ -17,6 +20,9 @@ if ($_GET) {
 
 
   if ($_POST) {
+    /**
+     * Saniterar indata och antingen avbryter redigeringen genom att skicka tillbaka användaren till artist eller album sidan eller sparar redigeringen genom att uppdatera det valda albumet eller artistens rad i databasen. Lägger även till låtar hos det redigerandes albumet. Skickar tillsist tillbaka användaren till sidan de kom ifrån ifall de inte lade till en låt i ett album.
+     */
     $safePost = sanitize($_POST);
 
     if ($safePost["answer"] == "Avbryt") {
