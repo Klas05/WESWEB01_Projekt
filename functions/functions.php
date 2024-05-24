@@ -68,10 +68,8 @@ function deleteRow(array $post, array $get): void
 }
 
 /**
- * Lägg till rad i databasen
+ * Lägger till rad i databasen. Utifrån indatan som skickas så anpassas sql query:n till rätt tabell i databasen med rätt värden.
  * 
- * 
- *
  * @param array $post
  * @return void
  */
@@ -106,10 +104,15 @@ function addRow(array $post): void
   }
 
   $stmt = $pdo->prepare($sql);
-  print_r($safePost);
   $stmt->execute($safePost);
 }
 
+/**
+ * Hämtar en månads namn utefter siffran dvs månad 1-12.
+ *
+ * @param integer $monthNumber
+ * @return string
+ */
 function getMonthName(int $monthNumber): string
 {
   // Skapa en array med månadernas namn
@@ -138,9 +141,21 @@ function getMonthName(int $monthNumber): string
   }
 }
 
+/**
+ * Hämtar låtarna som finns under inmatat album från databasen.
+ *
+ * @param integer $id
+ * @param string $item
+ * @return array
+ */
 function getSongs(int $id, string $item = "albums"): array
 {
+  // $foreignKey = substr_replace($item, "", -1) . "_id";
+  // $sql = "SELECT id, name, duration, release_year FROM songs WHERE " . $foreignKey .  " = " . $id;
+  // return getData($sql);
+
   $foreignKey = substr_replace($item, "", -1) . "_id";
-  $sql = "SELECT id, name, duration, release_year FROM songs WHERE " . $foreignKey .  " = " . $id;
-  return getData($sql);
+  $sql = "SELECT id, name, duration, release_year FROM songs WHERE :foreignKey = :id;";
+  // $args = ["foreignKey" => $foreignKey, "id" => $id];
+  return getData($sql, ["foreignKey" => $foreignKey, "id" => $id]);
 }

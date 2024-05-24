@@ -1,7 +1,13 @@
 <?php include_once("modules/navbar.php");
+/**
+ * Vid rad tillägg i databasen så skickas användaren till denna sida med en POST förfrågan.
+ * Vid detta fall så saniteras indatan och raden läggs till i databasen.
+ */
 if ($_POST) {
-  $safePost = sanitize($_POST);
-  addRow($_safePost);
+  $_safePost = sanitize($_POST);
+  if ($_safePost["artist"] !== "default") {
+    addRow($_safePost);
+  }
 }
 ?>
 <div class="albums_container">
@@ -61,10 +67,8 @@ if ($_POST) {
       if ($_GET) {
         $safeGet = sanitize($_GET);
         $sql = "SELECT * FROM albums_display WHERE artist_id = :artist_id ORDER BY artist_id, release_date;";
-        $albums = getData($sql, [$safeGet["artists"]]);
+        $albums = getData($sql, ["artist_id" => $safeGet["artists"]]);
       }
-
-
 
       foreach ($albums as $album) {
         echo "<tr>";
