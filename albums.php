@@ -1,7 +1,12 @@
-<?php include_once("modules/navbar.php");
+<?php
+
+/**
+ * Denna fils översiktliga uppgift är att hämta alla album som existerar i databasen och visar upp de för klienten. Filen erbjuder även att lägga till, redigera och ta bort album från databasen.
+ */
+include_once("modules/navbar.php");
 /**
  * Vid rad tillägg i databasen så skickas användaren till denna sida med en POST förfrågan.
- * Vid detta fall så saniteras indatan och raden läggs till i databasen.
+ * Vid detta fall så saniteras indatan och raden läggs till i databasen med hjälp av addRow funktionen.
  */
 if ($_POST) {
   $safePost = sanitize($_POST);

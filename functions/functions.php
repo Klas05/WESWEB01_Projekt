@@ -3,7 +3,7 @@
 require_once __DIR__ . "/../modules/connector.php";
 
 /**
- * Filtrerar användar input i GET- och POST förfrågningar
+ * Filtrerar användar input i GET- och POST förfrågningar.
  *
  * @param array $getOrPost
  * @return array

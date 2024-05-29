@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Hemsidan för projektet. Visar upp det senaste tillagda albumet i databasen samt dess relevanta information.
+ */
+
 include_once("modules/navbar.php");
 
 require_once "functions/functions.php";

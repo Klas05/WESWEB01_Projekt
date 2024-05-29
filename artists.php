@@ -6,7 +6,7 @@
 include_once("modules/navbar.php");
 /**
  * Vid rad tillägg i databasen så skickas användaren till denna sida med en POST förfrågan.
- * Vid detta fall så saniteras indatan och raden läggs till i databasen.
+ * Vid detta fall så saniteras indatan och raden läggs till i databasen med hjälp av addRow funktionen.
  */
 if ($_POST) {
   $safePost = sanitize($_POST);
@@ -20,6 +20,7 @@ if ($_POST) {
     <select name="genre" id="dropdown">
       <option value="default">Välj genre</option>
       <?php
+      // Hämtar de distinkta olika genrerna som redan existerar för att sedan visa upp de i en dropdown lista för enkel filtrering.
       $sql = "SELECT DISTINCT genre FROM artists";
       $genres = getData($sql);
 
@@ -82,7 +83,7 @@ if ($_POST) {
 
 <script>
   /**
-   * Laddar om sidan vid val av genre för sortering.
+   * Laddar om sidan vid val av genre för filtrering.
    */
   document.getElementById("dropdown").addEventListener("change", function() {
     document.getElementById("dropdown_form").submit();
