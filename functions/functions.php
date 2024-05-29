@@ -44,10 +44,8 @@ function getData(string $sql, array $args = NULL): array
  * @param array $get
  * @return void
  */
-function deleteRow(array $post, array $get): void
+function deleteRow(array $safePost, array $safeGet): void
 {
-  $safePost = sanitize($post);
-  $safeGet = sanitize($get);
   if ($safePost["answer"] == "Ja") {
     try {
       $pdo = connectToDb();

@@ -13,9 +13,12 @@ require_once "functions/functions.php";
 if ($_GET) {
   if ($_GET["action"] == "delete") {
     include_once("modules/delete.php");
-  }
-  if ($_GET["action"] == "modify") {
+  } elseif ($_GET["action"] == "modify") {
     include_once("modules/modify.php");
+  } else {
+    echo "Aja baja, ändra inte i länken tack!";
+    sleep(5);
+    header("location:index.php");
   }
 }
 

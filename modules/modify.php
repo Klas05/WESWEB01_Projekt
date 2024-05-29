@@ -3,20 +3,27 @@ if ($_GET) {
   ob_start();
 
   /**
-   * Saniterar indata och hämtar rätt rad i databasen samt visar upp rätt format genom att inkludera filen med formatet för antingen album eller artister.
+   * Saniterar indata och hämtar rätt rad i databasen samt visar upp rätt format genom att inkludera filen med formatet för antingen album eller artister. Om användaren har ändrat i länken så felaktig indata hämtas så skickas användaren tillbaka till startsidan.
    */
-  $safeGet = sanitize($_GET);
-  $sql = "SELECT * from " . $safeGet["item"] . " WHERE id = :id";
-  $arg = ["id" => $safeGet["id"]];
-  $result = getData($sql, $arg)[0];
+  try {
+    $safeGet = sanitize($_GET);
+    $sql = "SELECT * from " . $safeGet["item"] . " WHERE id = :id";
+    $arg = ["id" => $safeGet["id"]];
+    $result = getData($sql, $arg)[0];
 
-  if ($safeGet["item"] == "albums") {
-    $sql = "SELECT * FROM artist_names";
-    $artists = getData($sql);
-    include_once("modules/modifyAlbum.php");
-  }
-  if ($safeGet["item"] == "artists") {
-    include_once("modules/modifyArtist.php");
+    if ($safeGet["item"] == "albums") {
+      $sql = "SELECT * FROM artist_names";
+      $artists = getData($sql);
+      include_once("modules/modifyAlbum.php");
+    }
+    if ($safeGet["item"] == "artists") {
+      include_once("modules/modifyArtist.php");
+    }
+  } catch (\Throwable $th) {
+    echo "<h1>Aja baja, ändra inte i länken tack!</h1>";
+    $fail = True;
+    sleep(5);
+    header("location:index.php");
   }
 
 
@@ -25,6 +32,9 @@ if ($_GET) {
      * Saniterar indata och antingen avbryter redigeringen genom att skicka tillbaka användaren till artist eller album sidan eller sparar redigeringen genom att uppdatera det valda albumet eller artistens rad i databasen. Lägger även till låtar hos det redigerandes albumet. Skickar tillsist tillbaka användaren till sidan de kom ifrån ifall de inte lade till en låt i ett album.
      */
     $safePost = sanitize($_POST);
+    if ($fail) {
+      header("location:index.php");
+    }
 
     if ($safePost["answer"] == "Avbryt") {
       header("location:" . $safeGet["item"] . ".php");
