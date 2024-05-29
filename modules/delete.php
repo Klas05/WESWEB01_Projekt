@@ -6,9 +6,9 @@
 
 $safeGet = sanitize($_GET);
 
-$sql = "SELECT name from " . $safeGet["item"] . " WHERE id = " . $safeGet["id"];
-
-$name = getData($sql)[0]["name"];
+$sql = "SELECT name from " . $safeGet["item"] . " WHERE id = :id";
+$arg = ["id" => $safeGet["id"]];
+$name = getData($sql, $arg)[0]["name"];
 
 if ($_POST) {
   $safePost = sanitize($_POST);

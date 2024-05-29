@@ -6,8 +6,9 @@ if ($_GET) {
    * Saniterar indata och hämtar rätt rad i databasen samt visar upp rätt format genom att inkludera filen med formatet för antingen album eller artister.
    */
   $safeGet = sanitize($_GET);
-  $sql = "SELECT * from " . $safeGet["item"] . " WHERE id = " . $safeGet["id"];
-  $result = getData($sql)[0];
+  $sql = "SELECT * from " . $safeGet["item"] . " WHERE id = :id";
+  $arg = ["id" => $safeGet["id"]];
+  $result = getData($sql, $arg)[0];
 
   if ($safeGet["item"] == "albums") {
     $sql = "SELECT * FROM artist_names";

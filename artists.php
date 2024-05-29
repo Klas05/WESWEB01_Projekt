@@ -55,11 +55,13 @@ if ($_POST) {
        */
       $sql = "SELECT * FROM artists ORDER BY name;";
       if ($_GET) {
-        $sql = "SELECT * FROM artists WHERE genre = '" . $_GET["genre"] . "' ORDER BY name;";
+        $safeGet = sanitize($_GET);
+        $sql = "SELECT * FROM artists WHERE genre = :genre ORDER BY name;";
+        $arg = ["genre" => $safeGet["genre"]];
+        $artists = getData($sql, $arg);
+      } else {
+        $artists = getData($sql);
       }
-
-      $artists = getData($sql);
-
       foreach ($artists as $artist) {
         echo "<tr>";
         $id = $artist["id"];

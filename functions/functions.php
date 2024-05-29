@@ -142,7 +142,7 @@ function getMonthName(int $monthNumber): string
 }
 
 /**
- * Hämtar låtarna som finns under inmatat album från databasen.
+ * Hämtar låtarna som finns under inmatat album eller artist från databasen.
  *
  * @param integer $id
  * @param string $item
@@ -150,13 +150,8 @@ function getMonthName(int $monthNumber): string
  */
 function getSongs(int $id, string $item = "albums"): array
 {
-  // $foreignKey = substr_replace($item, "", -1) . "_id";
-  // $sql = "SELECT id, name, duration, release_year FROM songs WHERE " . $foreignKey .  " = " . $id;
-  // return getData($sql);
-
-  $foreignKey = substr_replace($item, "", -1) . "_id";
+  $foreignKey = rtrim($item, 's') . "_id";
   $sql = "SELECT id, name, duration, release_year FROM songs WHERE " . $foreignKey . " = :id";
   $args = ["id" => $id];
-  // print_r();
   return getData($sql, $args);
 }
