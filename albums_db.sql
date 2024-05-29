@@ -1,6 +1,6 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               10.4.28-MariaDB - mariadb.org binary distribution
+-- Server version:               10.4.32-MariaDB - mariadb.org binary distribution
 -- Server OS:                    Win64
 -- HeidiSQL Version:             12.6.0.6765
 -- --------------------------------------------------------
@@ -31,15 +31,12 @@ CREATE TABLE IF NOT EXISTS `albums` (
   `img` varchar(100) DEFAULT NULL,
   `import_date` datetime NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table skivor_ab.albums: ~4 rows (approximately)
+-- Dumping data for table skivor_ab.albums: ~1 rows (approximately)
 DELETE FROM `albums`;
 INSERT INTO `albums` (`id`, `artist_id`, `name`, `rating`, `release_date`, `img`, `import_date`) VALUES
-	(1, 1, 'Iron Maiden', 5, '1980-04-14', 'https://upload.wikimedia.org/wikipedia/en/7/7c/Iron_Maiden_%28album%29_cover.jpg', '2024-04-16 20:05:41'),
-	(2, 2, 'Nevermind', 5, '1991-09-24', 'https://upload.wikimedia.org/wikipedia/en/b/b7/NirvanaNevermindalbumcover.jpg', '2024-04-16 20:21:00'),
-	(3, 1, 'Peace of Mind', 8, '1983-05-16', NULL, '2024-04-23 14:00:06'),
-	(4, 2, 'In Utero', 10, '1993-09-21', NULL, '2024-04-23 14:02:00');
+	(2, 2, 'Nevermind', 7, '1991-09-24', 'https://upload.wikimedia.org/wikipedia/en/b/b7/NirvanaNevermindalbumcover.jpg', '2024-04-16 20:21:00');
 
 -- Dumping structure for view skivor_ab.albums_display
 DROP VIEW IF EXISTS `albums_display`;
@@ -60,7 +57,7 @@ CREATE TABLE IF NOT EXISTS `artists` (
   `name` varchar(50) NOT NULL DEFAULT '0',
   `genre` varchar(50) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Dumping data for table skivor_ab.artists: ~2 rows (approximately)
 DELETE FROM `artists`;
@@ -86,9 +83,9 @@ CREATE TABLE IF NOT EXISTS `songs` (
   `duration` time NOT NULL DEFAULT '00:00:00',
   `release_year` year(4) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Dumping data for table skivor_ab.songs: ~20 rows (approximately)
+-- Dumping data for table skivor_ab.songs: ~19 rows (approximately)
 DELETE FROM `songs`;
 INSERT INTO `songs` (`id`, `album_id`, `artist_id`, `name`, `duration`, `release_year`) VALUES
 	(1, 1, 1, 'Prowler', '00:03:56', '1980'),
@@ -109,8 +106,7 @@ INSERT INTO `songs` (`id`, `album_id`, `artist_id`, `name`, `duration`, `release
 	(16, 2, 2, 'Drain You', '00:03:44', '1991'),
 	(17, 2, 2, 'Lounge Act', '00:02:37', '1991'),
 	(18, 2, 2, 'Stay Away', '00:03:32', '1991'),
-	(19, 2, 2, 'On a Plain', '00:03:16', '1991'),
-	(20, 2, 2, 'On Something in the Way', '00:03:52', '1991');
+	(19, 2, 2, 'On a Plain', '00:03:16', '1991');
 
 -- Dumping structure for view skivor_ab.start
 DROP VIEW IF EXISTS `start`;
