@@ -32,7 +32,7 @@ if ($_GET) {
     $pdo = connectToDb();
 
     if ($safePost["answer"] === "Lägg till") {
-      addRow($_safePost);
+      addRow($safePost);
 
       header('Location: ' . $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING']);
     }

@@ -4,9 +4,9 @@
  * Vid detta fall så saniteras indatan och raden läggs till i databasen.
  */
 if ($_POST) {
-  $_safePost = sanitize($_POST);
-  if ($_safePost["artist"] !== "default") {
-    addRow($_safePost);
+  $safePost = sanitize($_POST);
+  if ($safePost["artist"] !== "default") {
+    addRow($safePost);
   }
 }
 ?>

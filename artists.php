@@ -1,11 +1,16 @@
-<?php include_once("modules/navbar.php");
+<?php
+
+/**
+ * Denna filens översiktliga uppgift är att visa upp alla artister som finns med i databasen och erbjuder alternativen att lägga till, modifiera och radera artister från databasen.
+ */
+include_once("modules/navbar.php");
 /**
  * Vid rad tillägg i databasen så skickas användaren till denna sida med en POST förfrågan.
  * Vid detta fall så saniteras indatan och raden läggs till i databasen.
  */
 if ($_POST) {
   $safePost = sanitize($_POST);
-  addRow($_safePost);
+  addRow($safePost);
 }
 ?>
 
@@ -68,7 +73,6 @@ if ($_POST) {
         echo "<a href='change.php?action=delete&item=artists&id=" . $id . "'>Ta bort</a>";
         echo "</td>";
       }
-
       ?>
     </table>
   </div>

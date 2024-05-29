@@ -155,7 +155,8 @@ function getSongs(int $id, string $item = "albums"): array
   // return getData($sql);
 
   $foreignKey = substr_replace($item, "", -1) . "_id";
-  $sql = "SELECT id, name, duration, release_year FROM songs WHERE :foreignKey = :id;";
-  // $args = ["foreignKey" => $foreignKey, "id" => $id];
-  return getData($sql, ["foreignKey" => $foreignKey, "id" => $id]);
+  $sql = "SELECT id, name, duration, release_year FROM songs WHERE " . $foreignKey . " = :id";
+  $args = ["id" => $id];
+  // print_r();
+  return getData($sql, $args);
 }

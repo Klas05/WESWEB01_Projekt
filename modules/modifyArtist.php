@@ -2,12 +2,12 @@
   <div class="form_wrapper">
     <form action="" method="post">
       <fieldset class="editing">
-        <legend>Redigera artisten <?php echo $res["name"]; ?></legend>
+        <legend>Redigera artisten <?php echo $result["name"]; ?></legend>
         <div class="values">
           <label for="name">Namn:</label>
-          <input type="text" name="name" id="name" value="<?php echo $res["name"]; ?>">
+          <input type="text" name="name" id="name" value="<?php echo $result["name"]; ?>">
           <label for="genre">Genre:</label>
-          <input type="text" name="genre" id="genre" value="<?php echo $res["genre"]; ?>">
+          <input type="text" name="genre" id="genre" value="<?php echo $result["genre"]; ?>">
         </div>
         <div class="answers">
           <input type="submit" name="answer" value="Spara">
